@@ -547,7 +547,7 @@ export default function Benchmarks() {
           {[
             [
               'Vector RAG lost the category it was supposed to win — 3/15',
-              'T1 asks a single company what it disclosed about one topic: exactly the shape similarity search is for, and on a single month of filings it passed. At 508,714 chunks from 5,210 companies it collapsed. Asked about Moderna it returned Entegris, Hayward, Open Text, Arrowhead and NVIDIA — all genuinely about supply chain, none Moderna. A company name is not a strong enough signal in embedding space to outweigh topical similarity. To its credit it refused honestly on 12 of the 15 attempts rather than answering about the wrong company.',
+              'T1 asks a single company what it disclosed about one topic: exactly the shape similarity search is for, and on a single month of filings it passed. At 508,714 chunks from 5,210 companies it collapsed. Asked about Moderna it returned Entegris, Hayward, Open Text, Arrowhead and NVIDIA — all genuinely about supply chain, none Moderna. A company name is not a strong enough signal in embedding space to outweigh topical similarity. Its 15 attempts break down as 3 passes, 6 refusals and 6 answers that named the right company and the right risks but cited no filing — so it rarely asserted anything false, but it also rarely produced auditable provenance.',
             ],
             [
               'Plain SQL beat GraphRAG at entity resolution — 14/15 vs 9/15',

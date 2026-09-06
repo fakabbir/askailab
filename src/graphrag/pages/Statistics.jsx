@@ -282,8 +282,11 @@ export default function Statistics() {
           <Panel title="Graph edges" note="every one carries filing_id">
             <Bars rows={s.graph.edges} highlight={(l) => l === 'RESOLVES_TO'} />
             <p className="mt-3 font-mono text-[10.5px] leading-relaxed text-helper">
-              RESOLVES_TO is the smallest and most valuable: 1,232 cases where a disclosed
-              subsidiary is itself an SEC filer — a fact no single document states.
+              RESOLVES_TO is the smallest and most valuable: 246 cases where a disclosed
+              subsidiary is itself an SEC filer — a fact no single document states. It is also
+              the weakest link: 246 edges cover 0.12% of the 200,869 subsidiary nodes, because
+              EX-21 carries no CIK for a subsidiary and the name must be matched. That thinness
+              is a direct cause of GraphRAG losing the entity-resolution category.
             </p>
           </Panel>
         </div>
