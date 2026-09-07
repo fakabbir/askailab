@@ -127,7 +127,7 @@ function Hero() {
               </div>
               <dl className="divide-y divide-border">
                 {[
-                  { label: 'Answers with a source citation', val: '100%', note: 'GraphRAG, 44 passes' },
+                  { label: 'Answers with a source citation', val: '100%', note: 'GraphRAG, 50 passes' },
                   { label: 'Confident falsehoods', val: '0', note: 'across 60 runs' },
                   { label: 'Unverifiable claims', val: '0', note: 'every hop carries filing_id' },
                 ].map((s) => (

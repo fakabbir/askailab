@@ -399,7 +399,7 @@ export default function Playground() {
         <p className="mt-3 font-mono text-[10.5px] leading-relaxed text-helper">
           Queries carry a 45s Postgres statement timeout and a 50s request deadline. text-to-SQL
           hits it on the multi-hop questions — it writes joins across subsidiary, filing_section
-          and reporting_owner without narrowing first, measured at 92s average and 445s worst case.
+          and reporting_owner without narrowing first, measured at 32s average on the multi-hop questions and 274s worst case.
           That timeout is the honest result, not a broken page.
         </p>
       </PageHead>

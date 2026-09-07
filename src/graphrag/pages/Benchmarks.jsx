@@ -311,11 +311,16 @@ export default function Benchmarks() {
         <OutcomeGrid onPick={setOpenId} />
         <Legend />
         <p className="mt-4 max-w-3xl text-[13.5px] leading-relaxed text-secondary">
-          The rows worth arguing with are <strong className="text-text">T2-1, T2-3, T2-4</strong>{' '}
-          (GraphRAG loses to plain SQL), <strong className="text-text">T4-2</strong> (GraphRAG scores
-          zero on a question designed for it), and <strong className="text-text">T1-1</strong> through{' '}
-          <strong className="text-text">T1-5</strong>, where Vector RAG — the expected winner — got
-          one question of five. Each is explained at the bottom of this page.
+          The rows worth arguing with are <strong className="text-text">T2-1, T2-3, T2-4</strong>,
+          where GraphRAG scores zero and plain SQL is perfect;{' '}
+          <strong className="text-text">T3-1</strong> through{' '}
+          <strong className="text-text">T3-4</strong>, the red cells, where text-to-SQL asserts
+          something false rather than refusing; and{' '}
+          <strong className="text-text">T1-1</strong> through{' '}
+          <strong className="text-text">T1-5</strong>, where Vector RAG — the expected winner —
+          solved one question of five. Each is explained at the bottom of this page.{' '}
+          <strong className="text-text">T4</strong> is a corrected result: it was published as a
+          GraphRAG loss and turned out to be a defect in our own schema documentation.
         </p>
       </Section>
 
@@ -413,7 +418,8 @@ export default function Benchmarks() {
             and on T4 it needed one on every single attempt — the first Cypher matches
             <code className="mx-1 font-mono text-[12px]">nameNormalized</code> exactly, gets zero
             rows, and the correction frequently misses too. That is most of the gap between its
-            780,500 tokens and text-to-SQL&rsquo;s 158,171.
+            {fmt(data.totals.graphrag.tokens)} tokens and text-to-SQL&rsquo;s{' '}
+            {fmt(data.totals.text_to_sql.tokens)}.
           </p>
           <p className="mt-3 font-mono text-[10.5px] leading-relaxed text-helper">
             The trigger is also not as neutral as it looks. An over-broad SQL join returns many
@@ -547,11 +553,11 @@ export default function Benchmarks() {
           {[
             [
               'Vector RAG lost the category it was supposed to win — 3/15',
-              'T1 asks a single company what it disclosed about one topic: exactly the shape similarity search is for, and on a single month of filings it passed. At 508,714 chunks from 5,210 companies it collapsed. Asked about Moderna it returned Entegris, Hayward, Open Text, Arrowhead and NVIDIA — all genuinely about supply chain, none Moderna. A company name is not a strong enough signal in embedding space to outweigh topical similarity. Its 15 attempts break down as 3 passes, 6 refusals and 6 answers that named the right company and the right risks but cited no filing — so it rarely asserted anything false, but it also rarely produced auditable provenance.',
+              'T1 asks a single company what it disclosed about one topic: exactly the shape similarity search is for, and on a single month of filings it passed. At 508,714 chunks from 5,210 companies it collapsed. Asked about Moderna it returned Entegris, Hayward, Open Text, Arrowhead and NVIDIA — all genuinely about supply chain, none Moderna. A company name is not a strong enough signal in embedding space to outweigh topical similarity. Its 15 attempts break down as 3 passes and 12 answers that named the right company and the right risks but cited no filing — so it almost never asserted anything false, and it almost never produced auditable provenance either.',
             ],
             [
-              'Plain SQL beat GraphRAG at entity resolution — 14/15 vs 9/15',
-              'T4 was written for the graph and the graph came second. The failure is mundane: the model wrote Subsidiary {nameNormalized: "aep texas inc"} while the loader’s normalise step strips corporate suffixes, so the stored key is "aep texas". Zero rows, honest refusal, 0/3 on T4-2. Across the category text-to-SQL took 4 of 5 questions outright to GraphRAG’s 2. Postgres won because ILIKE %aep texas% is forgiving in a way an exact property match is not. LLM-authored Cypher is no more reliable than LLM-authored SQL, and a normalised join key is a liability when the model cannot see it.',
+              'The category we got wrong — and what fixing it cost',
+              'We first published T4 as a loss for the graph: 14/15 for text-to-SQL against 9/15. It was not a loss, it was a defect in our own schema documentation. Both stores strip corporate suffixes when normalising names — AEP Texas Inc. is stored as \u201caep texas\u201d — and neither schema doc said so. Only the graph was exposed, because it matched the property exactly while SQL matched the raw column with ILIKE. Documenting it identically for both arms and changing nothing else: GraphRAG went to 15/15, and text-to-SQL\u2019s single-document score went from 0/15 to 7/15 — so the original report understated both the graph and the strongest baseline. The uncomfortable part is that it also made SQL more dangerous: its confident falsehoods rose from 2 to 6, because knowing the schema turned refusals into assertive multi-hop answers that conflate people sharing a surname.',
             ],
             [
               'GraphRAG is the wrong tool for aggregation — 6/15',
@@ -567,7 +573,7 @@ export default function Benchmarks() {
             ],
             [
               'The hallucinations were all one failure mode',
-              'Only two of the 180 attempts stated something verifiably false, both text-to-SQL on T3. Both were surname collisions: asked about Monica Lozano it reported five companies including Mondelez and Ternium — those are Mariano and Santiago Lozano. Asked about William Giles it reported ten companies. This is the exact failure the graph exists to prevent, and it is worth noting the model was fluent and confident both times.',
+              'Six of the 180 attempts stated something verifiably false. All six were text-to-SQL on the multi-hop category, across four of its five questions, and all six are the same error: asked about Monica Lozano it reported companies including Mondelez and Ternium, which belong to Mariano and Santiago Lozano. The SQL was well-formed and the model was confident. This is the failure that resolving identity to a CIK before reading any text prevents structurally — GraphRAG made no false statement in either measurement. Note the direction of travel: the count rose from 2 to 6 when we improved the baseline\u2019s schema documentation, so capability and safety moved opposite ways.',
             ],
           ].map(([title, body]) => (
             <Card key={title}>
