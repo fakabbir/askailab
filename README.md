@@ -1,6 +1,6 @@
-# Trussk
+# AskAILab
 
-Landing page for **Trussk** — a business that builds AI agents, integrates them into existing workflows, and measures their impact.
+Landing page for **AskAILab** — a business that builds AI agents, integrates them into existing workflows, and measures their impact.
 
 ## Run locally
 

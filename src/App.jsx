@@ -26,7 +26,7 @@ function Nav() {
           <span className="flex h-8 w-8 items-center justify-center bg-interactive text-white">
             <Mark className="h-5 w-5" />
           </span>
-          <span className="text-lg font-semibold tracking-tight text-text">Trussk</span>
+          <span className="text-lg font-semibold tracking-tight text-text">AskAILab</span>
         </a>
 
         <div className="hidden items-center gap-7 md:flex">
@@ -92,7 +92,7 @@ function Hero() {
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-secondary">
-              Anyone can demo an agent that sounds right. Trussk builds retrieval
+              Anyone can demo an agent that sounds right. AskAILab builds retrieval
               architectures whose every claim traces back to a source document, then publishes
               the measurements — including the ones that don&apos;t flatter us.
             </p>
@@ -313,10 +313,10 @@ function Footer() {
           <span className="flex h-7 w-7 items-center justify-center bg-interactive text-white">
             <Mark className="h-3.5 w-3.5" />
           </span>
-          <span className="font-semibold text-text">Trussk</span>
+          <span className="font-semibold text-text">AskAILab</span>
         </div>
         <p className="text-sm text-helper">
-          &copy; {new Date().getFullYear()} Trussk. Trustworthy AI agents, measured.
+          &copy; {new Date().getFullYear()} AskAILab. Trustworthy AI agents, measured.
         </p>
         <div className="flex flex-wrap gap-x-6">
           {[

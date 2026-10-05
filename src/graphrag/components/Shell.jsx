@@ -23,7 +23,7 @@ export function Shell({ children }) {
                 <div className="flex h-8 w-8 items-center justify-center bg-interactive-light">
                   <Mark className="h-5 w-5 text-interactive" />
                 </div>
-                <span className="font-serif text-lg tracking-tight">Trussk</span>
+                <span className="font-serif text-lg tracking-tight">AskAILab</span>
               </Link>
               <span className="hidden text-helper sm:inline">/</span>
               <Link
@@ -65,14 +65,14 @@ export function Shell({ children }) {
       <footer className="mt-24 border-t border-border py-10">
         <div className="mx-auto flex max-w-6xl flex-col gap-3 px-6 text-xs text-secondary sm:flex-row sm:items-center sm:justify-between">
           <p>
-            A Trussk research subproject. Data: SEC EDGAR, public domain.
+            An AskAILab research subproject. Data: SEC EDGAR, public domain.
             Not investment advice.
           </p>
           <Link
             to="/"
             className="inline-flex min-h-[2.25rem] items-center transition-colors hover:text-interactive"
           >
-            ← Back to trussk.com
+            ← Back to askailab.com
           </Link>
         </div>
       </footer>
