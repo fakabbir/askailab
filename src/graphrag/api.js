@@ -1,7 +1,9 @@
 // Query API client. Base URL comes from the Vercel env var VITE_API_BASE, which
 // is the CloudFront distribution in front of the EC2 host (HTTPS, so the browser
 // does not block it as mixed content).
-const BASE = (import.meta.env.VITE_API_BASE || '').replace(/\/$/, '')
+const BASE = (
+  import.meta.env.VITE_API_BASE || 'https://d2b5j13h2nwljn.cloudfront.net'
+).replace(/\/$/, '')
 
 export const API_CONFIGURED = BASE.length > 0
 
